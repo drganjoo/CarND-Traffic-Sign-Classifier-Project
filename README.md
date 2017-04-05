@@ -76,7 +76,7 @@ Signs:
 
 The following bar chart shows data distribution in the training set:
 
-![Distribution of Data](/raw/master/writeup/distribution.png?raw=true "Distribution)
+![Distribution of Data](/raw/master/writeup/distribution.png?raw=true "Distribution")
 
 **Top 6** occurring categories in the training set:
 
