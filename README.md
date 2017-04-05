@@ -1,4 +1,4 @@
-#**Traffic Sign Recognition** 
+# **Traffic Sign Recognition** 
 
 ---
 
@@ -16,8 +16,6 @@ The goals / steps of this project are the following:
 Link to my [project code](https://github.com/drganjoo/CarND-Traffic-Sign-Classifier-Project)
 
 ### Data Set Summary & Exploration
-
-#### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
 Dataset given has been broken down into training, validation and testing sub sets. 
 
@@ -78,7 +76,7 @@ Signs:
 
 The following bar chart shows data distribution in the training set:
 
-![Distribution of Data][/writeup/distribution.png]
+![Distribution of Data](writeup/distribution.png?raw=true "Distribution)
 
 **Top 6** occurring categories in the training set:
 
