@@ -76,7 +76,7 @@ Signs:
 
 The following bar chart shows data distribution in the training set:
 
-![Distribution of Data](/raw/master/writeup/distribution.png?raw=true "Distribution")
+![Distribution of Data](/writeup/distribution.png?raw=true "Distribution")
 
 **Top 6** occurring categories in the training set:
 
@@ -99,6 +99,18 @@ The following bar chart shows data distribution in the training set:
 | 32   | End of all speed and passing limits | 210 |
 | 27   | Pedestrians                         | 210 |
 | 41   | End of no passing                   | 210 |
+
+
+### Some sample images
+
+![50](/writeup/50.png "50")
+![30](/writeup/30.png "30")
+![end-of-no-passing](/writeup/end-of-no-passing.png "end-of-no-passing")
+![gostraight-left](/writeup/gostraight-left.png "go straight or left")
+![keepright](/writeup/keepright.png "keep right")
+![nopass](/writeup/nopass.png "no pass")
+![priority](/writeup/priority.png "priority")
+![yield](/writeup/yield.png "yeild")
 
 ###Design and Test a Model Architecture
 
