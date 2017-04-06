@@ -494,5 +494,3 @@ Following is the first layer of conv net for "Road Worker" real world image:
 * The real world image of "30 Zone", which was a little different from the training set "30 Zone" images, should at least have the correct category in the top 5 but it failed to even come close. More investigation needs to be done to see where the bug is in the convolutional layers or maybe it is the way the image was shortened to 32x32
 
 * The network comes close to merging but it never fully merges and there is some variation even towards the end of 400th EPOCH
-
-* How effective is YCbCr compared to plain vanilla RGB, needs to be looked into
