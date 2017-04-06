@@ -118,54 +118,33 @@ The following bar chart shows data distribution in the training set:
 
 #### Preprocessing
 
-1) **YCbCr** color space has been used. This color space provides a more natural way of representing luminosity and image colors.
+1) Earlier, **YCbCr** color space was used thinking that this particular color space provides a more natural way of representing luminosity and image colors.
 
 [More details on YCbCr](https://en.wikipedia.org/wiki/YCbCr)
 
-To convert to YCbCr, cv2 has not been used as that did not work on all images at the same time. Instead the following formula has been used:
+2) But later on RGB color space was used directly and that proved to be much better than YCbCr.
+
+2) Normalization: In order to reduce the effect of brightness on image classification, all of the images have been normalized before training. 
 
 ```
-def get_ycbcr(data):
-    ycbcr = np.array([[[0.299],  [0.5]      , [-0.168736]],
-                  [[0.587],  [-0.418688], [-0.331264]],
-                  [[0.114],  [-0.081312], [0.5]]      
-                 ]).squeeze()
-    data_ycbcr = np.dot(data, ycbcr) + np.array([0,128,128])
-    return data_ycbcr
-```
-
-2) Normalization: In order to reduce the effect of brightness on image classification, all of the images have been normalized before training. The Y channel is normalized separate from the other 2 color channels of CbCr.
-
-Mean is computed across all of the training set's Y component and CbCr
-```
-        mean = [np.mean(data_ycbcr[:,:,:,0]), np.mean(data_ycbcr[:,:,:,(1,2)])]
-```
-
-Similarly, standard deviation is computed across all of the training set's Cb & Cr components:
-
-```
-        sigma = [np.std(data_ycbcr[:,:,:,0]), np.std(data_ycbcr[:,:,:,(1,2)])]
+def normalize_rgb(data, mean = None, sigma = None):
+    print('Normalizing in RGB')
+    if mean == None or sigma == None:
+        print("Computing mean")
+        mean = np.mean(data)
+        sigma = np.std(data)
+        
+    print('Before normalizing data[0,0,0,0]:', data[0,0,0])
+        
+    data = data.astype(np.float32) - mean
+    data /= (sigma + 1e-7)
+    
+    print('After normalizing data[0,0,0,0]:', data[0,0,0])
+    
+    return data, mean, sigma
 ```
 
 In order to normalize validation and testing sets, mean and standard deviation **are not** recomputed but the same ones that were computed from the training set is used.
-
-```
-def normalize_ycbcr(data, mean=None, sigma=None):
-    data_ycbcr = get_ycbcr(data)
-    
-    if mean == None or sigma == None:
-        mean = [np.mean(data_ycbcr[:,:,:,0]), np.mean(data_ycbcr[:,:,:,(1,2)])]
-        sigma = [np.std(data_ycbcr[:,:,:,0]), np.std(data_ycbcr[:,:,:,(1,2)])]
-        
-    data_ycbcr[:,:,:,0] -= mean[0]
-    data_ycbcr[:,:,:,0] /= sigma[0] + 1e-7
-    data_ycbcr[:,:,:,1:2] -= mean[1]
-    data_ycbcr[:,:,:,1:2] /= sigma[1] + 1e-7
-    
-    #print('After norm[0,0,0,0]:', data_ycbcr[0,0,0])
-    
-    return data_ycbcr, mean, sigma
-```
 
 Various executions of the model with different parameters, different color spaces and different architecutres, all resulted in overfitting of data. Hence, more data was generated from the given ones.
 
@@ -202,7 +181,7 @@ Final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |---------------------|---------------------------------------------| 
-| Input         		| 32x32x3 YCbCr Normalized Image    			| 
+| Input         		| 32x32x3 RGB Normalized Image    			| 
 | Convolution 5x5x3x6  	| 1x1 stride, valid padding, outputs 28x28x6 	|
 | RELU					| 					                            |
 | Max Pooling	      	| 2x2 stride,  outputs 14x14x6  				|
@@ -238,9 +217,9 @@ To train the model, the following parameters were used:
 #### 4. Approach taken for finding the solution
 
 My final model results were:
-* training set accuracy of 0.992
-* validation set accuracy of 0.957
-* test set accuracy of 0.94
+* training set accuracy of 1.00
+* validation set accuracy of 0.982
+* test set accuracy of 0.968
 
 An iterative approach was chosen to find the solution:
 
@@ -256,7 +235,53 @@ It was interesting to find out that batch gradient algorithms do not work that w
 
 ##### Changed to YCbCr instead of RGB
 
-Since YCbCr has a specific channel for luminosity, I tried using this instead of plain RGB as it provides an easier way to average out the brightness. This however, did not achieve the desired result and it remains to be seen how much of an effect does YCbCr have on the result.
+Since YCbCr has a specific channel for luminosity, I tried using this instead of plain RGB as it provides an easier way to average out the brightness. I thought the network would have a better effect with the luminosity in a different channel and I would be normalizing the Y channel separately from the CbCr color channels. But this did not prove to be a good idea since it is clear from the following that some layers of C1 were not doing anything at all:
+
+Following is the first layer of conv net for "30 Speed Limit" real world image:
+
+!["visual-t1"](/writeup/visual-t1.png)
+
+Following is the first layer of conv net for "Priority Road" real world image:
+
+!["visual-t2"](/writeup/visual-t2.png)
+
+Following is the first layer of conv net for "Pedestrian" real world image:
+
+!["visual-t3"](/writeup/visual-t3.png)
+
+Following is the first layer of conv net for "Yield" real world image:
+
+!["visual-t4"](/writeup/visual-t4.png)
+
+Following is the first layer of conv net for "Road Worker" real world image:
+
+!["visual-t5"](/writeup/visual-t5.png)
+
+#### Changed back to RGB
+
+Changed back to RGB and the same C1 layer has the following outlook now:
+
+
+Following is the first layer of conv net for "30 Speed Limit" real world image:
+
+!["visual-t1"](/writeup/visual-t1-rgb.png)
+
+Following is the first layer of conv net for "Priority Road" real world image:
+
+!["visual-t2"](/writeup/visual-t2-rgb.png)
+
+Following is the first layer of conv net for "Pedestrian" real world image:
+
+!["visual-t3"](/writeup/visual-t3-rgb.png)
+
+Following is the first layer of conv net for "Yield" real world image:
+
+!["visual-t4"](/writeup/visual-t4-rgb.png)
+
+Following is the first layer of conv net for "Road Worker" real world image:
+
+!["visual-t5"](/writeup/visual-t5-rgb.png)
+
 
 ##### Weights changes to Xavier 
 
@@ -308,11 +333,11 @@ With two dropouts the accuracy and loss were much better:
 
 #### Final Result on Validation Set
 
-* training set accuracy of 0.992
-* validation set accuracy of 0.957
-* test set accuracy of 0.94
+* training set accuracy of 1.000
+* validation set accuracy of 0.982
+* test set accuracy of 0.968
 
-Since it is achieving > 90% on test set, it seems to be performing quite reasonable.
+Since it is achieving > 93% on test set, it seems to be performing quite reasonable.
 
 
 ### Why Do I believe LeNet is 'OK' for traffic sign classification BUT not the best
@@ -354,7 +379,7 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| 30 Zone      		    | End of all speed and passing limits | 
+| 30 Zone      		    | Speed limit (50km/h) | 
 | Priority     			| **Priority Road** 										|
 | Pedestrian			| Keep Right|
 | Yield	      		| **Yield**					 				|
@@ -373,13 +398,13 @@ For the first image, the model is absolutely wrong on the prediction.
 
 !["30 Zone"](/writeup/t1.png "t1")
 
-| Sign   | Probability  |
-|---|---|
-|End of all speed and passing limits|0.54|
-|Keep right|0.43|
-|Go straight or right|0.03|
-|Priority road|0.00|
-|Turn left ahead|0.00|
+|Sign|Probability|
+|----|-----------|
+|Speed limit (50km/h)|1.00|
+|Speed limit (30km/h)|0.00|
+|Wild animals crossing|0.00|
+|Speed limit (100km/h)|0.00|
+|Speed limit (80km/h)|0.00|
 
 !["30 Bar"](/writeup/30-bar.png "30-bar")
 
@@ -390,10 +415,10 @@ For the Second image, the model correctly predicts it as a priority road:
 |Sign|Probability|
 |----|-----------|
 |Priority road|1.00|
+|Traffic signals|0.00|
+|End of no passing by vehicles over 3.5 metric tons|0.00|
 |Speed limit (20km/h)|0.00|
 |Speed limit (30km/h)|0.00|
-|Speed limit (50km/h)|0.00|
-|Speed limit (60km/h)|0.00|
 
 !["T2 Bar"](/writeup/t2-bar.png "T2-Bar")
 
@@ -403,11 +428,11 @@ For the third image, the model incorrectly predicts it as keep right, which was 
 
 |Sign|Probability|
 |----|-----------|
-|Keep right|0.80|
-|Turn left ahead|0.17|
-|Priority road|0.02|
-|Go straight or right|0.01|
-|Ahead only|0.00|
+|Turn left ahead|0.79|
+|Go straight or right|0.11|
+|Ahead only|0.10|
+|Roundabout mandatory|0.00|
+|End of no passing|0.00|
 
 !["T3 Bar"](/writeup/t3-bar.png "T3-Bar")
 
@@ -434,9 +459,10 @@ For the fifth image, the model correctly predicts it as a Road Work sign and it 
 |----|-----------|
 |Road work|1.00|
 |Bumpy road|0.00|
-|Road narrows on the right|0.00|
-|Bicycles crossing|0.00|
 |Speed limit (20km/h)|0.00|
+|Speed limit (30km/h)|0.00|
+|Speed limit (50km/h)|0.00|
+
 
 !["T5 Bar"](/writeup/t5-bar.png "T5-Bar")
 
@@ -444,23 +470,23 @@ For the fifth image, the model correctly predicts it as a Road Work sign and it 
 
 Following is the first layer of conv net for "30 Speed Limit" real world image:
 
-!["visual-t1"](/writeup/visual-t1.png)
+!["visual-t1"](/writeup/visual-t1-rgb.png)
 
 Following is the first layer of conv net for "Priority Road" real world image:
 
-!["visual-t2"](/writeup/visual-t2.png)
+!["visual-t2"](/writeup/visual-t2-rgb.png)
 
 Following is the first layer of conv net for "Pedestrian" real world image:
 
-!["visual-t3"](/writeup/visual-t3.png)
+!["visual-t3"](/writeup/visual-t3-rgb.png)
 
 Following is the first layer of conv net for "Yield" real world image:
 
-!["visual-t4"](/writeup/visual-t4.png)
+!["visual-t4"](/writeup/visual-t4-rgb.png)
 
 Following is the first layer of conv net for "Road Worker" real world image:
 
-!["visual-t5"](/writeup/visual-t5.png)
+!["visual-t5"](/writeup/visual-t5-rgb.png)
 
 
 ## Short Commings
