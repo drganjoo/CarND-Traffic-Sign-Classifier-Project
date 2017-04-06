@@ -112,7 +112,7 @@ The following bar chart shows data distribution in the training set:
 ![keepright](/writeup/keepright.png "keep right")
 ![nopass](/writeup/nopass.png "no pass")
 ![priority](/writeup/priority.png "priority")
-![yield](/writeup/yield.png "yeild")
+![yield](/writeup/yield.png "yield")
 
 ### Design and Test a Model Architecture
 
@@ -411,7 +411,7 @@ For the third image, the model incorrectly predicts it as keep right, which was 
 
 !["T3 Bar"](/writeup/t3-bar.png "T3-Bar")
 
-For the fourth image, the model correctly predicts it as a priority Yeild sign and it does that with a 1.0 probability:
+For the fourth image, the model correctly predicts it as a Yield sign and it does that with a 1.0 probability:
 
 !["Yield"](/writeup/t4.png "t4")
 
@@ -465,7 +465,7 @@ Following is the first layer of conv net for "Road Worker" real world image:
 
 ## Short Commings
 
-* The real world image of "30 Zone", which was a little different from the training set "30 Zone" images, should at least the correct category in the top 5 but it failed to even come close. More investigation needs to be done to see where the bug is in the convolutional layers
+* The real world image of "30 Zone", which was a little different from the training set "30 Zone" images, should at least have the correct category in the top 5 but it failed to even come close. More investigation needs to be done to see where the bug is in the convolutional layers or maybe it is the way the image was shortened to 32x32
 
 * The network comes close to merging but it never fully merges and there is some variation even towards the end of 400th EPOCH
 
