@@ -184,7 +184,7 @@ Some examples:
 
 ![Rotate Left](/writeup/9960.jpg)
 ![Rotate Right](/writeup/9963.jpg)
-![Shift](/writeup/9772.jpg)
+![Shift](/writeup/9972.jpg)
 
 The difference between the original data set and the augmented data set is the following:
 
@@ -210,6 +210,7 @@ Final model consisted of the following layers:
 | Flatten   	        | Input: 5x5x16, Output: 400                    |
 | Fully connected N1    | Input: 400, Output: 120                       |
 | RELU		            |           									|
+| DROPOUT               | Keep Probability: 0.5                         |
 | Fully connected N2    | Input: 120, Output:  84                       |
 | RELU		            |           									|
 | DROPOUT               | Keep Probability: 0.5                         |
@@ -224,7 +225,7 @@ To train the model, the following parameters were used:
 |-----------------------|---------------------------------------------| 
 | EPOCH     | 250                        |
 | Batch Size     | 128                        |
-| Learning Rate     | 0.001                        |
+| Learning Rate     | 0.0008                        |
 | Initial Weights   | Xavier Initializer                        |
 | Dropout Keep Probability   | 0.5                        |
 | Optimizer   | Adam Optimizer                        |
@@ -237,7 +238,7 @@ To train the model, the following parameters were used:
 My final model results were:
 * training set accuracy of 0.992
 * validation set accuracy of 0.957
-* test set accuracy of 0.947
+* test set accuracy of 0.94
 
 An iterative approach was chosen to find the solution:
 
@@ -247,9 +248,9 @@ As a first step the original LeNet was used as that gives a good starting point.
 
 ##### Weight changes to mu and sigma
 
-Keeping the original LeNet played around with different mu, sigma, Epochs and batch sizes.
+Keeping the original LeNet, played around with different mu, sigma, Epochs and batch sizes but the validation accuracy did not go up.
 
-It was interesting to find out that batch graident algorithms do not work that well if the batch size is very high. In this particular case I tried using batch size from 128 to almost equal to all of the input size. As I moved higher the validation accuracy kept going down instead of moving up
+It was interesting to find out that batch gradient algorithms do not work that well if the batch size is very high. In this particular case I tried using batch size from 128 to almost equal to all of the input size. As I moved higher the validation accuracy kept going down instead of moving up
 
 ##### Changed to YCbCr instead of RGB
 
@@ -286,7 +287,7 @@ The model was still overfitting, hence more data was generated using the followi
 
 Dropout layers were introduced in all intermediate layers including convnet layers. But this started underfitting badly.
 
-#### Dropout Layer(s) In Fully Connected Only
+#### Dropout in the second Network Layer Only
 
 Dropout layers were then kept in fully connected layers only. This reduced underfitting that resulted from dropout in convnet layers and then achieved the desired 0.93 result in validation set.
 
@@ -294,6 +295,8 @@ Poor performance on the loss function was noticed when only one dropout is used:
 
 !["One Dropout Accuracy"](/writeup/one-dropout-accuracy.png "1 Accuracy")
 !["One Dropout Loss"](/writeup/one-dropout-loss.png "1 Loss")
+
+#### Dropout in the first & second Network Layers
 
 With two dropouts the accuracy and loss were much better:
 
@@ -310,7 +313,7 @@ With two dropouts the accuracy and loss were much better:
 Since it is achieving > 90% on test set, it seems to be performing quite reasonable.
 
 
-### Why Do I believe LeNet is 'OK' for traffic sign classification
+### Why Do I believe LeNet is 'OK' for traffic sign classification BUT not the best
 
 Well to be honest, I don't think LeNet is the best solution for this. Recent papers clearly indicate better performance from GoogLeNet or Resnet on ImageNet so chances are that they would be better than LeNet on traffic sign classification as well.
 
@@ -320,12 +323,16 @@ However, LeNet is sufficient enough for this assignment as it is a much smaller 
 
 #### 1. Real life german traffic sign images:
 
-Instead of choosing from the web a fellow Udacity student provided real life images. Five traffic signs were  cropped out of these images:
+Instead of choosing from the web a fellow Udacity student, Sonja Krause-Harder, provided real life images. Five traffic signs were  cropped out of these images:
 
 !["30 Zone"](/writeup/t1.png "30")
+
 !["Priority"](/writeup/t2.png "Priority")
+
 !["Pedestrian"](/writeup/t3.png "Pedestrian")
+
 !["Yield"](/writeup/t4.png "Yield")
+
 !["Workers"](/writeup/t5.png "Workers")
 
 The first image (30 Zone) might be difficult to classify because it has the word "Zone" written on the traffic sign where as the training set does not have this written:
