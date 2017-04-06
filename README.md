@@ -223,7 +223,7 @@ To train the model, the following parameters were used:
 
 | Component         	| Description    		                      | 
 |-----------------------|---------------------------------------------| 
-| EPOCH     | 250                        |
+| EPOCH     | 400                        |
 | Batch Size     | 128                        |
 | Learning Rate     | 0.0008                        |
 | Initial Weights   | Xavier Initializer                        |
@@ -461,5 +461,10 @@ Following is the first layer of conv net for "Road Worker" real world image:
 !["visual-t5"](/writeup/visual-t5.png)
 
 
-
 ## Short Commings
+
+* The real world image of "30 Zone", which was a little different from the training set "30 Zone" images, should at least the correct category in the top 5 but it failed to even come close. More investigation needs to be done to see where the bug is in the convolutional layers
+
+* The network comes close to merging but it never fully merges and there is some variation even towards the end of 400th EPOCH
+
+* How effective is YCbCr compared to plain vanilla RGB, needs to be looked into
