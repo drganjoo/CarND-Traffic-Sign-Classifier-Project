@@ -28,49 +28,51 @@ Dataset given has been broken down into training, validation and testing sub set
 
 Signs:
 
-0. Speed limit (20km/h)
-1. Speed limit (30km/h)
-2. Speed limit (50km/h)
-3. Speed limit (60km/h)
-4. Speed limit (70km/h)
-5. Speed limit (80km/h)
-6. End of speed limit (80km/h)
-7. Speed limit (100km/h)
-8. Speed limit (120km/h)
-9. No passing
-10. No passing for vehicles over 3.5 metric tons
-11. Right-of-way at the next intersection
-12. Priority road
-13. Yield
-14. Stop
-15. No vehicles
-16. Vehicles over 3.5 metric tons prohibited
-17. No entry
-18. General caution
-19. Dangerous curve to the left
-20. Dangerous curve to the right
-21. Double curve
-22. Bumpy road
-23. Slippery road
-24. Road narrows on the right
-25. Road work
-26. Traffic signals
-27. Pedestrians
-28. Children crossing
-29. Bicycles crossing
-30. Beware of ice/snow
-31. Wild animals crossing
-32. End of all speed and passing limits
-33. Turn right ahead
-34. Turn left ahead
-35. Ahead only
-36. Go straight or right
-37. Go straight or left
-38. Keep right
-39. Keep left
-40. Roundabout mandatory
-41. End of no passing
-42. End of no passing by vehicles over 3.5 metric tons
+|Category|Name|Random Image|
+| -------------------- | ------------------------------ |-------|
+|0|Speed limit (20km/h)|!["0"](/writeup/signs/0-10108.jpg)|
+|1|Speed limit (30km/h)|!["1"](/writeup/signs/1-3704.jpg)|
+|2|Speed limit (50km/h)|!["2"](/writeup/signs/2-33414.jpg)|
+|3|Speed limit (60km/h)|!["3"](/writeup/signs/3-5506.jpg)|
+|4|Speed limit (70km/h)|!["4"](/writeup/signs/4-7856.jpg)|
+|5|Speed limit (80km/h)|!["5"](/writeup/signs/5-13324.jpg)|
+|6|End of speed limit (80km/h)|!["6"](/writeup/signs/6-21616.jpg)|
+|7|Speed limit (100km/h)|!["7"](/writeup/signs/7-23730.jpg)|
+|8|Speed limit (120km/h)|!["8"](/writeup/signs/8-16554.jpg)|
+|9|No passing|!["9"](/writeup/signs/9-11859.jpg)|
+|10|No passing for vehicles over 3.5 metric tons|!["10"](/writeup/signs/10-17918.jpg)|
+|11|Right-of-way at the next intersection|!["11"](/writeup/signs/11-8806.jpg)|
+|12|Priority road|!["12"](/writeup/signs/12-28311.jpg)|
+|13|Yield|!["13"](/writeup/signs/13-23634.jpg)|
+|14|Stop|!["14"](/writeup/signs/14-29512.jpg)|
+|15|No vehicles|!["15"](/writeup/signs/15-30352.jpg)|
+|16|Vehicles over 3.5 metric tons prohibited|!["16"](/writeup/signs/16-5183.jpg)|
+|17|No entry|!["17"](/writeup/signs/17-30487.jpg)|
+|18|General caution|!["18"](/writeup/signs/18-20982.jpg)|
+|19|Dangerous curve to the left|!["19"](/writeup/signs/19-6766.jpg)|
+|20|Dangerous curve to the right|!["20"](/writeup/signs/20-25999.jpg)|
+|21|Double curve|!["21"](/writeup/signs/21-25934.jpg)|
+|22|Bumpy road|!["22"](/writeup/signs/22-4586.jpg)|
+|23|Slippery road|!["23"](/writeup/signs/23-1789.jpg)|
+|24|Road narrows on the right|!["24"](/writeup/signs/24-10969.jpg)|
+|25|Road work|!["25"](/writeup/signs/25-34699.jpg)|
+|26|Traffic signals|!["26"](/writeup/signs/26-1460.jpg)|
+|27|Pedestrians|!["27"](/writeup/signs/27-10489.jpg)|
+|28|Children crossing|!["28"](/writeup/signs/28-26854.jpg)|
+|29|Bicycles crossing|!["29"](/writeup/signs/29-10735.jpg)|
+|30|Beware of ice/snow|!["30"](/writeup/signs/30-25289.jpg)|
+|31|Wild animals crossing|!["31"](/writeup/signs/31-828.jpg)|
+|32|End of all speed and passing limits|!["32"](/writeup/signs/32-10260.jpg)|
+|33|Turn right ahead|!["33"](/writeup/signs/33-26398.jpg)|
+|34|Turn left ahead|!["34"](/writeup/signs/34-20264.jpg)|
+|35|Ahead only|!["35"](/writeup/signs/35-19451.jpg)|
+|36|Go straight or right|!["36"](/writeup/signs/36-1147.jpg)|
+|37|Go straight or left|!["37"](/writeup/signs/37-4892.jpg)|
+|38|Keep right|!["38"](/writeup/signs/38-15053.jpg)|
+|39|Keep left|!["39"](/writeup/signs/39-25490.jpg)|
+|40|Roundabout mandatory|!["40"](/writeup/signs/40-4330.jpg)|
+|41|End of no passing|!["41"](/writeup/signs/41-178.jpg)|
+|42|End of no passing by vehicles over 3.5 metric tons|!["42"](/writeup/signs/42-9811.jpg)|
 
 #### 2. Include an exploratory visualization of the dataset.
 
